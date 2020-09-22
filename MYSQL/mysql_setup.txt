@@ -1,0 +1,28 @@
+1) Download Docker Mysql Image
+docker pull mysql/mysql-server:latest
+	
+2) Validate downloaded images
+$docker images
+	
+3) Create directory for mysql configuration
+$mkdir -p /home/akshay/docker/mysql/conf.d
+	
+4) Create a custom MySQL config file inside that directory
+$ cat /home/akshay/docker/mysql/conf.d/my-custom.cnf 
+[mysqld]
+max_connections=250
+	
+5) Create directory for mysql data
+$mkdir -p /home/akshay/docker/mysql/data
+	
+6) Create docker MySQL Container
+docker run -p 6603:3306 --name mysql -e MYSQL_ROOT_PASSWORD=mysql123 -e MYSQL_ROOT_HOST=% --volume=/home/akshay/docker/mysql/conf.d:/etc/mysql/conf.d --volume=/home/akshay/docker/mysql/data:/var/lib/mysql -d mysql/mysql-server:latest
+	
+7) Connect to mysql database
+mysql -h 127.0.0.1 -P 6603 -u root -p
+	
+8) Load sample database
+wget https://sp.mysqltutorial.org/wp-content/uploads/2018/03/mysqlsampledatabase.zip
+	
+9) Extract mysqlsampledatabase.zip and Connect to mysql instance and run
+source mysqlsampledatabase.sql
